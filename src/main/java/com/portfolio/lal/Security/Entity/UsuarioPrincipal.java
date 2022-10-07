@@ -1,6 +1,5 @@
 package com.portfolio.lal.Security.Entity;
 
-import static com.sun.tools.javac.util.List.collector;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
