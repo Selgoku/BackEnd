@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("explaboral")
+@RequestMapping("/explaboral")
 //@CrossOrigin(origins = "http://localhost:4200")
 @CrossOrigin(origins = "https://frontendlal.web.app")
 public class CExperiencia {
