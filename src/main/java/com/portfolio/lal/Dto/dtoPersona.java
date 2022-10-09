@@ -1,52 +1,31 @@
-package com.portfolio.lal.Entity;
+package com.portfolio.lal.Dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
-@Entity
-public class Persona {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
-    @NotNull
-    @Size(min = 1, max = 50, message = "No Cumple con la Longitud")
+
+public class dtoPersona {
+    @NotBlank
     private String nombre;
-    
-    @NotNull
-    @Size(min = 1, max = 50, message = "No Cumple con la Longitud")
+    @NotBlank
     private String apellido;
-    
-    @NotNull
+    @NotBlank
     private String descripcion;
-    
+    @NotBlank
     private String img;
     
-    //constructores
+    //contructor
 
-    public Persona() {
+    public dtoPersona() {
     }
 
-    public Persona(String nombre, String apellido, String descripcion, String img) {
+    public dtoPersona(String nombre, String apellido, String descripcion, String img) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.descripcion = descripcion;
         this.img = img;
     }
     
-    //Getters % Setters
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    //Getters && Setters
 
     public String getNombre() {
         return nombre;
