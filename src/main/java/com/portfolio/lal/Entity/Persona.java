@@ -40,11 +40,11 @@ public class Persona {
     
     //Getters % Setters
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -79,6 +79,4 @@ public class Persona {
     public void setImg(String img) {
         this.img = img;
     }
-    
-    
 }
