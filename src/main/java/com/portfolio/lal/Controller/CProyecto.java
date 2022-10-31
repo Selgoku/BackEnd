@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/proyectos")
-@CrossOrigin(origins = {"https://frontendlal.web.app","http://localhost:4200"})
+@CrossOrigin(origins = {"https://frontendlal.web.app", "http://localhost:4200"})
 public class CProyecto {
 
     @Autowired
@@ -34,14 +34,14 @@ public class CProyecto {
     }
 
     @GetMapping("/detail/{id}")
-    public ResponseEntity<Proyecto> getById(@PathVariable("id") int id){
-        if(!Sproyecto.existsById(id))
+    public ResponseEntity<Proyecto> getById(@PathVariable("id") int id) {
+        if (!Sproyecto.existsById(id)) {
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        }
         Proyecto proyecto = Sproyecto.getOne(id).get();
         return new ResponseEntity(proyecto, HttpStatus.OK);
     }
-    
-    
+
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody dtoProyecto dtoproyecto) {
         if (StringUtils.isBlank(dtoproyecto.getNombre())) {
@@ -71,6 +71,9 @@ public class CProyecto {
         if (StringUtils.isBlank(dtoproyecto.getNombre())) {
             return new ResponseEntity(new Mensaje("El Nombre Obligatorio"), HttpStatus.BAD_REQUEST);
         }
+        if (StringUtils.isBlank(dtoproyecto.getImg())) {
+            return new ResponseEntity(new Mensaje("La imagen es Obligatoria"), HttpStatus.BAD_REQUEST);
+        }
 
         Proyecto proyecto = Sproyecto.getOne(id).get();
         proyecto.setNombre(dtoproyecto.getNombre());
@@ -81,15 +84,16 @@ public class CProyecto {
         Sproyecto.save(proyecto);
         return new ResponseEntity(new Mensaje("Proyecto Actualizado"), HttpStatus.OK);
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         //Se pregunta si el ID existe
         if (!Sproyecto.existsById(id)) {
             return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
         }
-        
+
         Sproyecto.delete(id);
-        
+
         return new ResponseEntity(new Mensaje("Proyecto eliminado"), HttpStatus.OK);
     }
 }

@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/personas")
-@CrossOrigin(origins = {"https://frontendlal.web.app","http://localhost:4200"})
+@CrossOrigin(origins = {"https://frontendlal.web.app", "http://localhost:4200"})
 public class PersonaController {
+
     @Autowired
     ImpPersonaService personaService;
 
@@ -32,9 +33,10 @@ public class PersonaController {
     }
 
     @GetMapping("/detail/{id}")
-    public ResponseEntity<Persona> getById(@PathVariable("id") int id){
-        if(!personaService.existsById(id))
+    public ResponseEntity<Persona> getById(@PathVariable("id") int id) {
+        if (!personaService.existsById(id)) {
             return new ResponseEntity(new Mensaje("No existe."), HttpStatus.NOT_FOUND);
+        }
         Persona persona = personaService.getOne(id).get();
         return new ResponseEntity(persona, HttpStatus.OK);
     }
@@ -53,19 +55,21 @@ public class PersonaController {
         if (StringUtils.isBlank(dtopersona.getNombre())) {
             return new ResponseEntity(new Mensaje("El Nombre Obligatorio"), HttpStatus.BAD_REQUEST);
         }
+        if (StringUtils.isBlank(dtopersona.getImg())) {
+            return new ResponseEntity(new Mensaje("La imagen es Obligatoria"), HttpStatus.BAD_REQUEST);
+        }
 
         Persona persona = personaService.getOne(id).get();
         persona.setNombre(dtopersona.getNombre());
         persona.setApellido(dtopersona.getApellido());
         persona.setDescripcion(dtopersona.getDescripcion());
         persona.setImg(dtopersona.getImg());
-        
+
         //Actualiza Persona
-        
         personaService.save(persona);
         return new ResponseEntity(new Mensaje("Persona Actualizada"), HttpStatus.OK);
     }
-    
+
     //Borrar Personas:
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
@@ -73,9 +77,9 @@ public class PersonaController {
         if (!personaService.existsById(id)) {
             return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
         }
-        
+
         personaService.delete(id);
-        
+
         return new ResponseEntity(new Mensaje("Persona eliminada"), HttpStatus.OK);
     }
 }
