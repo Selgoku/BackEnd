@@ -71,15 +71,16 @@ public class CProyecto {
         if (StringUtils.isBlank(dtoproyecto.getNombre())) {
             return new ResponseEntity(new Mensaje("El Nombre Obligatorio"), HttpStatus.BAD_REQUEST);
         }
-        if (StringUtils.isBlank(dtoproyecto.getImg())) {
-            return new ResponseEntity(new Mensaje("La imagen es Obligatoria"), HttpStatus.BAD_REQUEST);
-        }
 
         Proyecto proyecto = Sproyecto.getOne(id).get();
         proyecto.setNombre(dtoproyecto.getNombre());
         proyecto.setEnlace(dtoproyecto.getEnlace());
         proyecto.setDescripcion(dtoproyecto.getDescripcion());
-        proyecto.setImg(dtoproyecto.getImg());
+        if (StringUtils.isBlank(dtoproyecto.getImg())) {
+            proyecto.setImg(proyecto.getImg());
+        }else{
+            proyecto.setImg(dtoproyecto.getImg());
+        }
         //Actualiza Proyecto
         Sproyecto.save(proyecto);
         return new ResponseEntity(new Mensaje("Proyecto Actualizado"), HttpStatus.OK);

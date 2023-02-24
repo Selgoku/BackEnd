@@ -55,16 +55,17 @@ public class PersonaController {
         if (StringUtils.isBlank(dtopersona.getNombre())) {
             return new ResponseEntity(new Mensaje("El Nombre Obligatorio"), HttpStatus.BAD_REQUEST);
         }
-        if (StringUtils.isBlank(dtopersona.getImg())) {
-            return new ResponseEntity(new Mensaje("La imagen es Obligatoria"), HttpStatus.BAD_REQUEST);
-        }
+
 
         Persona persona = personaService.getOne(id).get();
         persona.setNombre(dtopersona.getNombre());
         persona.setApellido(dtopersona.getApellido());
         persona.setDescripcion(dtopersona.getDescripcion());
-        persona.setImg(dtopersona.getImg());
-
+        if (StringUtils.isBlank(dtopersona.getImg())) {
+            persona.setImg(persona.getImg());
+        }else{
+            persona.setImg(dtopersona.getImg());
+        }
         //Actualiza Persona
         personaService.save(persona);
         return new ResponseEntity(new Mensaje("Persona Actualizada"), HttpStatus.OK);
